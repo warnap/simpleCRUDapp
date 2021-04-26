@@ -4,7 +4,14 @@ services:
     build: ./backend/
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-    - ./backend:/code
+      - ./backend:/code
     ports:
       - "8000:8000"
-#  frontend_api:
+  frontend_api:
+    build: ./frontend/
+    command: ng serve
+    volumes:
+      - ./frontend:/code
+    ports:
+      - "4200:4200"
+

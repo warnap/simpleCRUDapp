@@ -11,4 +11,6 @@
 
 ### Run App using docker compose:
 1. Requirements Engine: `19.03.0+`
-2. In main folder run: `docker compose up`
+2. In main folder run: 
+    - `docker compose build`  
+    - `docker compose up`
