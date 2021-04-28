@@ -1,0 +1,7 @@
+.item:hover{
+    background-color: lightgray;
+}
+
+.list-item{
+    padding: 10px
+}

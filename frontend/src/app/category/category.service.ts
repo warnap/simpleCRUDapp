@@ -9,7 +9,6 @@ import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
 
 
 const baseUrl = 'http://127.0.0.1:8000/category/'
-// const baseUrl = 'https://jsonplaceholder.typicode.com/users/'
 
 const httpOptions = {
   headers: new Headers({

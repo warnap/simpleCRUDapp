@@ -8,6 +8,13 @@ import { CategoryComponent } from './category/category.component';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +26,11 @@ import { MessageService } from './message.service';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatListModule,
+    MatIconModule,
   ],
   providers: [
     HttpErrorHandler,

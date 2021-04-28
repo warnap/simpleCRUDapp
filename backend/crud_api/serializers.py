@@ -16,8 +16,7 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ['id', 'title', 'description', 'price', 'created_at', 'category']
-        # depth = 1
+        fields = ['id', 'title', 'price', 'created_at', 'category']
 
     def create(self, validated_data):
         return Offer.objects.create(**validated_data)

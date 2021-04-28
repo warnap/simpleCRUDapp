@@ -1,6 +1,4 @@
-<p>category works!</p>
-<ul class="categories">
-  <li *ngFor="let category of categories">
-      <span>{{ category.id }}</span> {{ category.name }}
-  </li>
-</ul>
+<mat-list class="categories" *ngFor="let category of categories">
+ <mat-list-item (click)="onClick(category)">{{category.name}}</mat-list-item>
+</mat-list>
+

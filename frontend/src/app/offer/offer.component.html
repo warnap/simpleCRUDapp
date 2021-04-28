@@ -1,1 +1,11 @@
-<p>offer works!</p>
+<mat-list class="offers" *ngFor="let offer of offers">
+ <mat-list-item matLine class="item" (click)="onClick(offer)">
+ <div class="list-item">{{offer.id}}</div>
+ <div class="list-item">{{offer.title}}</div>
+ <div class="list-item">{{offer.created_at}}</div>
+ <div class="list-item">{{offer.category.name}}</div>
+ <mat-icon>edit</mat-icon>
+ <mat-icon>delete_forever</mat-icon>
+ </mat-list-item>
+</mat-list>
+

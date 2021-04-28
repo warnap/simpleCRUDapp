@@ -20,6 +20,10 @@ export class CategoryComponent implements OnInit {
     this.getCategories();
   }
 
+  onClick(category: Category): void {
+    console.log(category.name + ' clicked')
+  }
+
   getCategories(): void {
     this.categoryService.getCategories()
     .subscribe(categories => this.categories = categories);
