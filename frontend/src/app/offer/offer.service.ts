@@ -1,36 +1,79 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 import { Offer } from './offer'
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
-
-const baseUrl = 'http://127.0.0.1:8000/offers/'
+import { ApiService } from '../api.service';
 
 const httpOptions = {
-  headers: new Headers({
-    'Content-Type': 'application/json',
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
   })
-}
+};
 
 @Injectable({
   providedIn: 'root'
 })
-export class OfferService {
+
+export class OfferService extends ApiService{
   private handleError: HandleError;
 
-  constructor(
-    private http: HttpClient,
+  constructor(private http: HttpClient,
     httpErrorHandler: HttpErrorHandler) {
+    super();
       this.handleError = httpErrorHandler.createHandleError('OfferService');
-     }
-
+    }
   getOfers(): Observable<Offer[]>{
-    return this.http.get<Offer[]>(baseUrl)
+    const endPoint = 'offers';
+    const url = this.createUrl(endPoint);
+
+    return this.http.get<Offer[]>(url)
       .pipe(
         catchError(this.handleError('getOffers',[]))
       );
   }
 
+  getOffer(offer: Offer): Observable<Offer>{
+    const endPoint = 'offers/' + offer.id;
+    const url = this.createUrl(endPoint);
+
+    return this.http.get<Offer>(url)
+      .pipe(
+        catchError(this.handleError('getOffers', offer))
+      );
+  }
+
+  addOffer(offer: Offer): Observable<Offer> {
+    const endPoint = 'offers/';
+    const url = this.createUrl(endPoint);
+
+    return this.http.post<Offer>(url, offer)
+    .pipe(
+      catchError(this.handleError('addOffer', offer))
+    );
+  }
+
+  updateOffer(offer: Offer): Observable<Offer> {
+    const endPoint = 'offers/' + offer.id + '/';
+    const url = this.createUrl(endPoint);
+
+    return this.http.put<Offer>(url, offer, httpOptions)
+
+    .pipe(
+      catchError(this.handleError('updateOffer', offer))
+    );
+
+  }
+
+  deleteOffer(id: number): Observable<{}> {
+    const endPoint = 'offers/'+ id +'/';
+    const url = this.createUrl(endPoint);
+
+    return this.http.delete(url, httpOptions)
+    .pipe(
+      catchError(this.handleError('deleteOffer', id))
+    );
+  }
 }

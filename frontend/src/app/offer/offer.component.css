@@ -1,7 +1,4 @@
-.item:hover{
+mat-list-item:hover {
     background-color: lightgray;
-}
-
-.list-item{
-    padding: 10px
+    padding: 0.2em auto;
 }
