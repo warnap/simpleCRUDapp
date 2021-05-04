@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 
-import { Offer } from './offer'
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { Offer } from './offer'
 import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
 import { ApiService } from '../api.service';
 
@@ -25,6 +26,7 @@ export class OfferService extends ApiService{
     super();
       this.handleError = httpErrorHandler.createHandleError('OfferService');
     }
+
   getOfers(): Observable<Offer[]>{
     const endPoint = 'offers';
     const url = this.createUrl(endPoint);
@@ -46,7 +48,7 @@ export class OfferService extends ApiService{
   }
 
   addOffer(offer: Offer): Observable<Offer> {
-    const endPoint = 'offers/';
+    const endPoint = 'offers/0/';
     const url = this.createUrl(endPoint);
 
     return this.http.post<Offer>(url, offer)

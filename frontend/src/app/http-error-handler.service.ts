@@ -31,6 +31,5 @@ export class HttpErrorHandler {
 
           return of( result );
         };
-
       }
 }

@@ -1,28 +1,59 @@
-<button mat-mini-fab color="primary">
-  <mat-icon layout-align="center" (click)="add()">add</mat-icon>
-</button>
+<div class="tab-menu">
+  <button mat-mini-fab color="primary" *ngIf="selectedOffer"
+  style="float:right; margin-right: 5px;">
+    <mat-icon (click)="exit()">clear</mat-icon>
+  </button>
 
-<mat-list layout-padding class="offers">
+  <button mat-mini-fab color="primary" *ngIf="selectedOffer"
+  style="float:right; margin-right: 5px;">
+    <mat-icon (click)="save(selectedOffer)">save</mat-icon>
+  </button>
 
+  <button mat-mini-fab color="primary" *ngIf="!selectedOffer"
+  style="float:right; margin-right: 5px;">
+    <mat-icon (click)="add()">add</mat-icon>
+  </button>
+</div>
 
- <mat-list-item matLine class="item" *ngFor="let offer of offers" (click)="onClick(offer)">
-{{offer.id}}
-{{offer.title}}
-{{offer.created_at}}
-{{offer.category.name}}
- <button mat-button (click)="edit(offer)">
-   <mat-icon>edit</mat-icon>
- </button>
- <button mat-button color="warn" (click)="delete(offer)">
-   <mat-icon>delete_forever</mat-icon>
- </button>
+<mat-list layout-padding class="offers" *ngIf="!selectedOffer">
+ <mat-list-item matLine class="item" *ngFor="let offer of offers"
+ (click)="onClick(offer)">
+  <span class="fill-remaining-space ">{{offer.id}}</span>
+  <span class="fill-remaining-space ">{{offer.title}}</span>
+  <span class="fill-remaining-space ">
+    {{offer.created_at | date: 'yyyy-MM-dd hh:mm:ss'}}
+  </span>
+  <span class="fill-remaining-space ">{{offer.category}}</span>
+  <button mat-button color="warn" (click)="delete(offer)">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
  </mat-list-item>
 </mat-list>
 
-
 <div *ngIf="selectedOffer">
-{{selectedOffer}}
-<!--<mat-select *ngIf="categories" *ngFor="let category of categories">
-    <mat-form-field>{{category.name}}</mat-form-field>
-</mat-select>-->
+  <form name="offerForm" (id)="selectedOffer.id">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter title</mat-label>
+      <input matInput name="title" placeholder="Offer title" [(ngModel)]="selectedOffer.title">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="selectedOffer.description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput type="number"name="price" [(ngModel)]="selectedOffer.price">
+    </mat-form-field>
+        {{selectedOffer.created_at | date: 'yyyy-MM-dd hh:mm:ss'}}
+    <mat-form-field appearance="fill">
+      <mat-label>Select me</mat-label>
+      <mat-select [(value)]="selectedOffer.category">
+        <mat-option name="category" *ngFor="let category of categories" [value]="category.id">
+          {{category.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
 </div>

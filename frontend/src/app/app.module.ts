@@ -10,14 +10,9 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from './material.module'
 
 
 @NgModule({
@@ -32,13 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatListModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTableModule,
-    MatButtonModule,
+    MaterialModule,
   ],
   providers: [
     HttpErrorHandler,

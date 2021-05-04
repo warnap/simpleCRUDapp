@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Category } from '../category/category';
+import { CategoryService } from '../category/category.service';
 import { Offer } from './offer';
 import { OfferService } from './offer.service';
 
@@ -15,10 +17,12 @@ export class OfferComponent implements OnInit {
   editOffer?: Offer;
   categories?: Category[];
 
-  constructor(private offerService: OfferService) { }
+  constructor(private offerService: OfferService,
+              private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.getOffers();
+    this.getCategories();
   }
 
   getOffers(): void {
@@ -31,26 +35,44 @@ export class OfferComponent implements OnInit {
     .subscribe(offer => this.selectedOffer = offer);
   }
 
+  getCategories(): void {
+    this.categoryService.getCategories()
+    .subscribe(categories => this.categories = categories);
+  }
+
   onClick(offer: Offer): void {
-    this.selectedOffer = offer;
+    this.getCategories();
+    this.offerService.getOffer(offer)
+    .subscribe(offer => this.selectedOffer = offer);
   }
 
   add() {
-    console.log('Add clicked!')
-    // this.editOffer = undefined;
-
-    // this.offerService
-    //   .addOffer(this.editOffer)
-    //   .subscribe(offer => this.offers?.push(offer));
+    this.getCategories();
+    var new_offer = <Offer>{};
+    this.selectedOffer = new_offer;
   }
 
-  edit(offer:Offer): void {
+  save(offer: Offer): void {
+    var new_offer: Offer = offer;
 
+    if(offer.id != null){
+      this.offerService.updateOffer(offer)
+      .subscribe(offer => new_offer = offer);
+    } else {
+      this.offerService.addOffer(offer)
+      .subscribe(offer => new_offer = offer);
+    }
+    this.getOffers();
+    this.selectedOffer = undefined;
   }
 
   delete(offer: Offer): void {
     this.offers = this.offers?.filter(o => o !== offer);
     const id = offer.id;
     this.offerService.deleteOffer(id).subscribe();
+  }
+
+  exit(): void {
+    this.selectedOffer = undefined;
   }
 }
