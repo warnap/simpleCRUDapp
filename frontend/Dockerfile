@@ -1,8 +1,9 @@
-FROM node:15-alpine
-WORKDIR /usr/src/frontend
+FROM node:15
+RUN mkdir -p /app
+WORKDIR /app
+COPY package*.json /app/
 RUN npm install -g npm@latest
-RUN npm install -g @angular/cli
-RUN npm install --save-dev @angular-devkit/build-angular
-COPY . .
+RUN npm config set registry https://registry.npmjs.org/
 RUN npm install
-RUN ng build
+COPY . /app/
+EXPOSE 4200
