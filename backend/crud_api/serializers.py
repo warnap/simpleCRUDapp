@@ -2,6 +2,16 @@ from rest_framework import serializers
 from .models import Category, Offer
 
 
+class TimestampField(serializers.DateTimeField):
+    def to_representation(self, value):
+        return value.timestamp()
+
+
+class JsTimestampField(serializers.DateTimeField):
+    def to_representation(self, value):
+        return round(value.timestamp() * 1000)
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -11,12 +21,20 @@ class CategorySerializer(serializers.ModelSerializer):
         return Category.objects.create(**validated_data)
 
 
-class OfferSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+class OfferListSerializer(serializers.ModelSerializer):
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    created_at = JsTimestampField(read_only=True)
 
     class Meta:
         model = Offer
         fields = ['id', 'title', 'price', 'created_at', 'category']
 
-    def create(self, validated_data):
-        return Offer.objects.create(**validated_data)
+
+class OfferDetailSerializer(serializers.ModelSerializer):
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    created_at = JsTimestampField(read_only=True)
+
+    class Meta:
+        model = Offer
+        fields = ('id', 'title', 'description', 'price', 'created_at', 'category')
+        depth = 1
